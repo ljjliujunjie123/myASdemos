@@ -33,11 +33,11 @@ import com.example.composelearnljj.ui.theme.Teal200
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ComposeLearnLJJTheme() {
-                ShowDemo(messages = MsgData.messages)
-            }
-        }
+//        setContent {
+//            ComposeLearnLJJTheme() {
+//                ShowDemo(messages = MsgData.messages)
+//            }
+//        }
     }
 }
 
@@ -115,6 +115,28 @@ fun MessageCard(msg: Message) {
             }
         }
     }
+}
+
+@Composable
+@Deprecated("Example with bug")
+fun ListWithBug(myList: List<String>) {
+    var items = 0
+
+    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+        Column {
+            for (item in myList) {
+                Text("Item: $item")
+                items++ // Avoid! Side-effect of the column recomposing.
+            }
+        }
+        Text("Count: $items")
+    }
+}
+
+@Preview
+@Composable
+fun PreviewListWithBug() {
+    ListWithBug(myList = listOf("1","2","3"))
 }
 
 //@Preview(name = "Light Mode")
